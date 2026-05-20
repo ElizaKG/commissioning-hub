@@ -202,7 +202,7 @@ function buildPrompt(type, extra) {
     p += '5. LOCAL RADAR — anything specific to ' + loc + ' or North Central London\n';
     p += '6. FUNDING AND FINANCE — new funding streams, grants, or financial developments\n';
     p += '7. ONE TO WATCH — an emerging issue worth monitoring\n\n';
-    p += 'Focus areas: ' + focus + '. Be concise. After each item add one sentence: Commissioning implication: [analysis]. Flag anything ACTION REQUIRED. Cite sources with dates.';
+    p += 'Focus areas: ' + focus + '. Be concise. After each item add one sentence: Commissioning implication: [analysis]. Flag anything ACTION REQUIRED. For every item include the source name, date, and a full working web link so I can read more. Always check BBC News, the Guardian, and Haringey Community Press (hcpress.co.uk) alongside sector sources.';
   } else if (type === 'policy') {
     p = 'You are a policy intelligence advisor for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n';
     if (extra) p += 'Specific focus: ' + extra + '\n';
@@ -213,7 +213,7 @@ function buildPrompt(type, extra) {
     p += '4. PARLIAMENTARY ACTIVITY — relevant select committee inquiries or written answers this week\n';
     p += '5. REGULATORY UPDATES — CQC inspection framework changes or new guidance\n';
     p += '6. LEGAL DEVELOPMENTS — case law, judicial reviews, or ombudsman decisions\n\n';
-    p += 'For each item: source, date, and one sentence on implications for a commissioner at ' + loc + '. Focus areas: ' + focus + '.';
+    p += 'For each item: source name, date, full web link, and one sentence on implications for a commissioner at ' + loc + '. Focus areas: ' + focus + '. Always check BBC News and the Guardian alongside specialist sources.';
   } else if (type === 'horizon') {
     p = 'You are a horizon scanning advisor for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n';
     if (extra) p += 'Topic: ' + extra + '\n';
@@ -225,7 +225,7 @@ function buildPrompt(type, extra) {
     p += '5. FINANCIAL INNOVATION — new approaches to value-for-money or financial sustainability in commissioning\n';
     p += '6. POLITICAL SIGNALS — longer-horizon political signals or manifesto commitments\n';
     p += '7. COMMISSIONER\'S OPPORTUNITY — one specific concrete opportunity this creates for a proactive commissioner at ' + loc + '\n\n';
-    p += 'For each item estimate a timeframe: now, 6-12 months, or 2-3 years. Cite sources. Focus areas: ' + focus + '.';
+    p += 'For each item estimate a timeframe: now, 6-12 months, or 2-3 years. Include source name and full web link for every item. Focus areas: ' + focus + '.';
   } else if (type === 'funding') {
     p = 'You are a funding intelligence advisor for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n';
     if (extra) p += 'Area of interest: ' + extra + '\n';
@@ -236,7 +236,7 @@ function buildPrompt(type, extra) {
     p += '4. FORMULA FUNDING CHANGES — any changes to core local authority or NHS funding allocations or Better Care Fund\n';
     p += '5. INNOVATION FUNDS — test-and-learn, pilot, or innovation funding relevant to commissioning transformation\n';
     p += '6. PARTNERSHIP OPPORTUNITIES — funding requiring or incentivising joint commissioning\n\n';
-    p += 'For each: source, amount if known, deadline, eligibility, and relevance to ' + loc + '. Focus areas: ' + focus + '.';
+    p += 'For each: source name, full web link, amount if known, deadline, eligibility, and relevance to ' + loc + '. Focus areas: ' + focus + '.';
   } else if (type === 'local') {
     p = 'You are a local intelligence advisor for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n\n';
     p += 'Search the web and produce a local radar briefing:\n\n';
@@ -246,7 +246,7 @@ function buildPrompt(type, extra) {
     p += '4. LOCAL DEMOGRAPHIC AND NEEDS — published data or research on population needs or health inequalities in Haringey\n';
     p += '5. VOLUNTARY SECTOR — news from VCSE organisations in Haringey relevant to social care commissioning\n';
     p += '6. COMPARATOR AUTHORITIES — interesting developments from comparable London boroughs\n\n';
-    p += 'For each: source, date, and commissioning implication. Flag anything requiring a political or operational response.';
+    p += 'For each: source name, date, full web link, and commissioning implication. Flag anything requiring a political or operational response. Always check: Haringey Council website (haringey.gov.uk), Haringey Community Press (hcpress.co.uk), BBC News London, the Guardian, and NCL ICB website (northcentrallondon.icb.nhs.uk).';
   } else if (type === 'events') {
     p = 'You are a learning and development advisor for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n';
     if (extra) p += 'Interests: ' + extra + '\n';
@@ -257,7 +257,7 @@ function buildPrompt(type, extra) {
     p += '4. LEADERSHIP AND ORGANISATIONAL DEVELOPMENT — events on public sector leadership, team culture, or organisational development\n';
     p += '5. LOCAL AND REGIONAL — events specific to London, North Central London, or local government in the South East\n';
     p += '6. FREE OR LOW-COST OPTIONS — webinars, online events, or free CPD worth noting\n\n';
-    p += 'For each event: name, organiser, date, location or online, approximate cost if known, and one sentence on why it is relevant. Flag early-bird deadlines. List in date order within each section.';
+    p += 'For each event: name, organiser, date, location or online, approximate cost if known, full web link to the event page, and one sentence on why it is relevant. Flag early-bird deadlines. List in date order within each section.';
   }
   return p;
 }
