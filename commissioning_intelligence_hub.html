@@ -6,1214 +6,407 @@
 <title>Commissioning Intelligence Hub</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --bg: #f5f4f0;
-    --surface: #ffffff;
-    --surface2: #f0efe9;
-    --border: rgba(0,0,0,0.1);
-    --border-med: rgba(0,0,0,0.18);
-    --text: #1a1a18;
-    --text2: #5a5a54;
-    --text3: #9a9a90;
-    --green: #0f6e56;
-    --green-light: #e1f5ee;
-    --green-mid: #1d9e75;
-    --green-text: #085041;
-    --amber: #ba7517;
-    --amber-light: #faeeda;
-    --red: #a32d2d;
-    --red-light: #fcebeb;
-    --blue: #185fa5;
-    --blue-light: #e6f1fb;
-    --radius: 10px;
-    --radius-sm: 6px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f5f4f0;--surface:#fff;--surface2:#f0efe9;
+  --border:rgba(0,0,0,0.1);--border-med:rgba(0,0,0,0.18);
+  --text:#1a1a18;--text2:#5a5a54;--text3:#9a9a90;
+  --green:#0f6e56;--green-light:#e1f5ee;--green-mid:#1d9e75;--green-dark:#085041;
+  --blue:#185fa5;--blue-light:#e6f1fb;
+  --red:#a32d2d;
+  --r:10px;--rs:6px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1a1a18;--surface:#242422;--surface2:#2c2c2a;
+    --border:rgba(255,255,255,0.1);--border-med:rgba(255,255,255,0.18);
+    --text:#f0efe9;--text2:#a8a89e;--text3:#6a6a62;
+    --green-light:#04342c;--green-dark:#9fe1cb;--blue-light:#042c53;
   }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1a1a18;
-      --surface: #242422;
-      --surface2: #2c2c2a;
-      --border: rgba(255,255,255,0.1);
-      --border-med: rgba(255,255,255,0.18);
-      --text: #f0efe9;
-      --text2: #a8a89e;
-      --text3: #6a6a62;
-      --green-light: #04342c;
-      --green-text: #9fe1cb;
-      --amber-light: #412402;
-      --red-light: #501313;
-      --blue-light: #042c53;
-    }
-  }
-
-  body {
-    font-family: 'Georgia', serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    font-size: 15px;
-    line-height: 1.6;
-  }
-
-  .app-shell {
-    max-width: 780px;
-    margin: 0 auto;
-    padding: 0 0 60px;
-  }
-
-  /* Header */
-  .header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-
-  .header-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .brand-mark {
-    width: 34px;
-    height: 34px;
-    background: var(--green);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-family: 'Georgia', serif;
-    font-size: 15px;
-    font-style: italic;
-    letter-spacing: -0.5px;
-  }
-
-  .brand-text h1 {
-    font-size: 14px;
-    font-weight: normal;
-    font-family: 'Georgia', serif;
-    color: var(--text);
-    letter-spacing: 0.01em;
-  }
-
-  .brand-text p {
-    font-size: 11px;
-    color: var(--text3);
-    font-family: system-ui, sans-serif;
-    letter-spacing: 0.03em;
-  }
-
-  .api-pill {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 11px;
-    color: var(--text3);
-    font-family: system-ui, sans-serif;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    cursor: pointer;
-  }
-
-  .api-pill:hover { border-color: var(--border-med); }
-
-  .status-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--text3);
-  }
-
-  .status-dot.live { background: var(--green-mid); }
-
-  /* Nav tabs */
-  .nav {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 0 20px;
-    display: flex;
-    gap: 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .nav::-webkit-scrollbar { display: none; }
-
-  .nav-tab {
-    padding: 11px 14px;
-    font-size: 12px;
-    font-family: system-ui, sans-serif;
-    color: var(--text3);
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    transition: color 0.15s;
-    letter-spacing: 0.02em;
-  }
-
-  .nav-tab:hover { color: var(--text2); }
-  .nav-tab.active { color: var(--green); border-bottom-color: var(--green-mid); }
-
-  /* Content area */
-  .content {
-    padding: 20px;
-  }
-
-  /* Section label */
-  .section-label {
-    font-size: 10px;
-    font-family: system-ui, sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin-bottom: 10px;
-  }
-
-  /* Cards */
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    margin-bottom: 14px;
-  }
-
-  /* Quick launch grid — 3 buttons only */
-  .launch-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 18px;
-  }
-
-  @media (max-width: 500px) {
-    .launch-grid { grid-template-columns: 1fr; }
-  }
-
-  .launch-btn {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 14px;
-    cursor: pointer;
-    text-align: left;
-    transition: border-color 0.15s, background 0.15s;
-  }
-
-  .launch-btn:hover {
-    border-color: var(--green-mid);
-    background: var(--green-light);
-  }
-
-  .launch-icon {
-    font-size: 22px;
-    color: var(--green-mid);
-    display: block;
-    margin-bottom: 8px;
-  }
-
-  .launch-title {
-    font-size: 13px;
-    font-weight: normal;
-    font-family: 'Georgia', serif;
-    color: var(--text);
-    display: block;
-    margin-bottom: 3px;
-  }
-
-  .launch-desc {
-    font-size: 11px;
-    font-family: system-ui, sans-serif;
-    color: var(--text3);
-    line-height: 1.4;
-  }
-
-  /* Info banner */
-  .info-banner {
-    background: var(--blue-light);
-    border: 1px solid rgba(24,95,165,0.2);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-    margin-bottom: 16px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-
-  .info-banner i { color: var(--blue); font-size: 16px; margin-top: 1px; flex-shrink: 0; }
-  .info-banner p { font-size: 12px; font-family: system-ui, sans-serif; color: var(--blue); line-height: 1.5; }
-  .info-banner a { text-decoration: underline; cursor: pointer; color: var(--blue); }
-
-  /* Topic pills */
-  .pill-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 12px;
-  }
-
-  .pill {
-    font-size: 11px;
-    font-family: system-ui, sans-serif;
-    padding: 4px 11px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    color: var(--text2);
-    cursor: pointer;
-    background: var(--surface2);
-    transition: all 0.15s;
-  }
-
-  .pill:hover { border-color: var(--green-mid); color: var(--green); background: var(--green-light); }
-  .pill.active { border-color: var(--green-mid); color: var(--green-text); background: var(--green-light); }
-
-  /* Input row */
-  .input-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
-
-  .input-row input, .input-row textarea {
-    flex: 1;
-    font-size: 13px;
-    font-family: system-ui, sans-serif;
-    padding: 9px 12px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    outline: none;
-    transition: border-color 0.15s;
-  }
-
-  .input-row input:focus, .input-row textarea:focus { border-color: var(--green-mid); }
-
-  textarea.tall {
-    min-height: 90px;
-    resize: vertical;
-    line-height: 1.5;
-  }
-
-  /* Run button */
-  .run-btn {
-    background: var(--green);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 9px 18px;
-    font-size: 13px;
-    font-family: system-ui, sans-serif;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    white-space: nowrap;
-    transition: background 0.15s;
-  }
-
-  .run-btn:hover { background: var(--green-text); }
-  .run-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-
-  /* Result area */
-  .result-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-top: 4px;
-  }
-
-  .result-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px;
-    border-bottom: 1px solid var(--border);
-    background: var(--surface2);
-  }
-
-  .result-bar-title {
-    font-size: 12px;
-    font-family: system-ui, sans-serif;
-    font-weight: 600;
-    color: var(--text2);
-    letter-spacing: 0.02em;
-  }
-
-  .result-actions {
-    display: flex;
-    gap: 6px;
-  }
-
-  .icon-btn {
-    font-size: 12px;
-    font-family: system-ui, sans-serif;
-    color: var(--text3);
-    cursor: pointer;
-    padding: 3px 9px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: var(--surface);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: color 0.15s;
-  }
-
-  .icon-btn:hover { color: var(--text); border-color: var(--border-med); }
-
-  .result-body {
-    padding: 16px;
-    font-size: 13px;
-    font-family: system-ui, sans-serif;
-    line-height: 1.8;
-    color: var(--text);
-    white-space: pre-wrap;
-    max-height: 520px;
-    overflow-y: auto;
-  }
-
-  .loading-state {
-    padding: 28px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 13px;
-    font-family: system-ui, sans-serif;
-    color: var(--text3);
-  }
-
-  .spinner {
-    width: 18px; height: 18px;
-    border: 2px solid var(--border);
-    border-top-color: var(--green-mid);
-    border-radius: 50%;
-    animation: spin 0.75s linear infinite;
-    flex-shrink: 0;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .empty-state {
-    padding: 36px 16px;
-    text-align: center;
-    font-size: 13px;
-    font-family: system-ui, sans-serif;
-    color: var(--text3);
-  }
-
-  .empty-state i { font-size: 28px; display: block; margin-bottom: 8px; }
-
-  /* Persona grid */
-  .persona-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .persona-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 12px 8px;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.15s;
-  }
-
-  .persona-card:hover { border-color: var(--green-mid); }
-  .persona-card.on { border-color: var(--green-mid); background: var(--green-light); }
-
-  .avatar {
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    margin: 0 auto 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-family: system-ui, sans-serif;
-    font-weight: 600;
-  }
-
-  .persona-name { font-size: 12px; font-family: system-ui, sans-serif; font-weight: 600; color: var(--text); }
-  .persona-role { font-size: 10px; font-family: system-ui, sans-serif; color: var(--text3); margin-top: 1px; line-height: 1.3; }
-
-  /* Settings rows */
-  .settings-section { margin-bottom: 20px; }
-
-  .settings-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding: 13px 0;
-    border-bottom: 1px solid var(--border);
-    gap: 16px;
-  }
-
-  .settings-row:last-child { border-bottom: none; }
-
-  .settings-label {
-    font-size: 13px;
-    font-family: system-ui, sans-serif;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 2px;
-  }
-
-  .settings-sub {
-    font-size: 11px;
-    font-family: system-ui, sans-serif;
-    color: var(--text3);
-    line-height: 1.4;
-  }
-
-  .settings-row input[type="text"],
-  .settings-row input[type="password"] {
-    font-size: 12px;
-    font-family: system-ui, sans-serif;
-    padding: 7px 10px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text);
-    width: 200px;
-    outline: none;
-  }
-
-  .settings-row input:focus { border-color: var(--green-mid); }
-
-  /* Tag list */
-  .tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 8px;
-  }
-
-  .tag {
-    font-size: 11px;
-    font-family: system-ui, sans-serif;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    color: var(--text2);
-    background: var(--surface2);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .tag-remove {
-    cursor: pointer;
-    color: var(--text3);
-    font-size: 10px;
-    line-height: 1;
-  }
-
-  .tag-remove:hover { color: var(--red); }
-
-  .tag-add {
-    font-size: 11px;
-    font-family: system-ui, sans-serif;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px dashed var(--border-med);
-    color: var(--text3);
-    cursor: pointer;
-    background: transparent;
-    transition: all 0.15s;
-  }
-
-  .tag-add:hover { border-color: var(--green-mid); color: var(--green); }
-
-  /* Saved list */
-  .saved-list { font-family: system-ui, sans-serif; }
-
-  .saved-item {
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .saved-item:last-child { border-bottom: none; }
-  .saved-item:hover .saved-title { color: var(--green); }
-
-  .saved-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 2px;
-    transition: color 0.15s;
-  }
-
-  .saved-meta { font-size: 11px; color: var(--text3); }
-
-  .saved-badge {
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    background: var(--green-light);
-    color: var(--green-text);
-    white-space: nowrap;
-    flex-shrink: 0;
-    font-weight: 600;
-  }
-
-  .delete-btn {
-    font-size: 11px;
-    color: var(--text3);
-    cursor: pointer;
-    padding: 2px 6px;
-  }
-
-  .delete-btn:hover { color: var(--red); }
-
-  /* Small util buttons */
-  .util-btn {
-    font-size: 11px;
-    font-family: system-ui, sans-serif;
-    color: var(--text3);
-    cursor: pointer;
-    padding: 4px 10px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    transition: all 0.15s;
-  }
-
-  .util-btn:hover { color: var(--text); border-color: var(--border-med); }
-
-  .btn-row { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+}
+body{font-family:Georgia,serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+.shell{max-width:780px;margin:0 auto;padding-bottom:60px}
+.hdr{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.hdr-l{display:flex;align-items:center;gap:10px}
+.mark{width:34px;height:34px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-family:Georgia,serif;font-size:15px;font-style:italic}
+.brand h1{font-size:14px;font-weight:normal;color:var(--text)}
+.brand p{font-size:11px;color:var(--text3);font-family:system-ui,sans-serif}
+.apipill{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3);font-family:system-ui,sans-serif;padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:var(--surface2);cursor:pointer}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--text3)}
+.dot.live{background:var(--green-mid)}
+.nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;display:flex;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.ntab{padding:11px 14px;font-size:12px;font-family:system-ui,sans-serif;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:5px;transition:color .15s}
+.ntab:hover{color:var(--text2)}
+.ntab.on{color:var(--green);border-bottom-color:var(--green-mid)}
+.body{padding:20px}
+.lbl{font-size:10px;font-family:system-ui,sans-serif;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px}
+.lgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+@media(max-width:500px){.lgrid{grid-template-columns:1fr}}
+.lbtn{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px;cursor:pointer;text-align:left;transition:border-color .15s,background .15s}
+.lbtn:hover{border-color:var(--green-mid);background:var(--green-light)}
+.lbtn i{font-size:22px;color:var(--green-mid);display:block;margin-bottom:8px}
+.lbtn strong{font-size:13px;font-weight:normal;font-family:Georgia,serif;color:var(--text);display:block;margin-bottom:3px}
+.lbtn span{font-size:11px;font-family:system-ui,sans-serif;color:var(--text3);line-height:1.4}
+.info{background:var(--blue-light);border:1px solid rgba(24,95,165,0.2);border-radius:var(--r);padding:12px 14px;margin-bottom:16px;display:flex;gap:10px;align-items:flex-start}
+.info i{color:var(--blue);font-size:16px;margin-top:1px;flex-shrink:0}
+.info p{font-size:12px;font-family:system-ui,sans-serif;color:var(--blue);line-height:1.5}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.pill{font-size:11px;font-family:system-ui,sans-serif;padding:4px 11px;border-radius:20px;border:1px solid var(--border);color:var(--text2);cursor:pointer;background:var(--surface2);transition:all .15s}
+.pill:hover,.pill.on{border-color:var(--green-mid);color:var(--green-dark);background:var(--green-light)}
+.irow{display:flex;gap:8px;margin-bottom:14px}
+.irow input,.irow textarea{flex:1;font-size:13px;font-family:system-ui,sans-serif;padding:9px 12px;border-radius:var(--rs);border:1px solid var(--border);background:var(--surface);color:var(--text);outline:none;transition:border-color .15s}
+.irow input:focus,.irow textarea:focus{border-color:var(--green-mid)}
+.rbtn{background:var(--green);color:#fff;border:none;border-radius:var(--rs);padding:9px 18px;font-size:13px;font-family:system-ui,sans-serif;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;transition:background .15s}
+.rbtn:hover{background:var(--green-dark)}
+.rbtn:disabled{opacity:.45;cursor:not-allowed}
+.rbox{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:4px}
+.rbar{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);background:var(--surface2)}
+.rtitle{font-size:12px;font-family:system-ui,sans-serif;font-weight:600;color:var(--text2)}
+.ract{display:flex;gap:6px}
+.ibtn{font-size:12px;font-family:system-ui,sans-serif;color:var(--text3);cursor:pointer;padding:3px 9px;border-radius:var(--rs);border:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:4px}
+.ibtn:hover{color:var(--text);border-color:var(--border-med)}
+.rbody{padding:16px;font-size:13px;font-family:system-ui,sans-serif;line-height:1.8;color:var(--text);white-space:pre-wrap;max-height:520px;overflow-y:auto}
+.loading{padding:28px 16px;display:flex;align-items:center;gap:12px;font-size:13px;font-family:system-ui,sans-serif;color:var(--text3)}
+.spin{width:18px;height:18px;border:2px solid var(--border);border-top-color:var(--green-mid);border-radius:50%;animation:spin .75s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty{padding:36px 16px;text-align:center;font-size:13px;font-family:system-ui,sans-serif;color:var(--text3)}
+.empty i{font-size:28px;display:block;margin-bottom:8px}
+.srow{display:flex;align-items:flex-start;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--border);gap:16px}
+.srow:last-child{border-bottom:none}
+.slbl{font-size:13px;font-family:system-ui,sans-serif;font-weight:600;color:var(--text);margin-bottom:2px}
+.ssub{font-size:11px;font-family:system-ui,sans-serif;color:var(--text3);line-height:1.4}
+.srow input{font-size:12px;font-family:system-ui,sans-serif;padding:7px 10px;border-radius:var(--rs);border:1px solid var(--border);background:var(--surface);color:var(--text);width:200px;outline:none}
+.srow input:focus{border-color:var(--green-mid)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.tag{font-size:11px;font-family:system-ui,sans-serif;padding:4px 10px;border-radius:20px;border:1px solid var(--border);color:var(--text2);background:var(--surface2);display:flex;align-items:center;gap:5px}
+.tag-x{cursor:pointer;color:var(--text3);font-size:10px}
+.tag-x:hover{color:var(--red)}
+.tag-add{font-size:11px;font-family:system-ui,sans-serif;padding:4px 10px;border-radius:20px;border:1px dashed var(--border-med);color:var(--text3);cursor:pointer;background:transparent}
+.tag-add:hover{border-color:var(--green-mid);color:var(--green)}
+.sitem{padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.sitem:last-child{border-bottom:none}
+.sitem:hover .stitle{color:var(--green)}
+.stitle{font-size:13px;font-weight:600;font-family:system-ui,sans-serif;color:var(--text);margin-bottom:2px;transition:color .15s}
+.smeta{font-size:11px;font-family:system-ui,sans-serif;color:var(--text3)}
+.sbadge{font-size:10px;padding:2px 8px;border-radius:10px;background:var(--green-light);color:var(--green-dark);white-space:nowrap;flex-shrink:0;font-weight:600;font-family:system-ui,sans-serif}
+.xbtn{font-size:11px;color:var(--text3);cursor:pointer;padding:2px 6px;font-family:system-ui,sans-serif}
+.xbtn:hover{color:var(--red)}
+.ubtn{font-size:11px;font-family:system-ui,sans-serif;color:var(--text3);cursor:pointer;padding:4px 10px;border-radius:var(--rs);border:1px solid var(--border);background:var(--surface2)}
+.ubtn:hover{color:var(--text);border-color:var(--border-med)}
+.ssec{margin-bottom:20px}
 </style>
 </head>
 <body>
-<div class="app-shell">
-
-  <!-- Header -->
-  <div class="header">
-    <div class="header-brand">
-      <div class="brand-mark">C</div>
-      <div class="brand-text">
+<div class="shell">
+  <div class="hdr">
+    <div class="hdr-l">
+      <div class="mark">C</div>
+      <div class="brand">
         <h1>Commissioning Intelligence Hub</h1>
-        <p id="date-line">Loading...</p>
+        <p id="dateline"></p>
       </div>
     </div>
-    <div class="api-pill" onclick="switchTab('settings')">
-      <div class="status-dot" id="status-dot"></div>
-      <span id="status-text">Settings</span>
+    <div class="apipill" onclick="go('settings')">
+      <div class="dot" id="dot"></div>
+      <span id="dotlbl">Settings</span>
     </div>
   </div>
-
-  <!-- Nav -->
   <div class="nav">
-    <div class="nav-tab active" id="tab-briefing" onclick="switchTab('briefing')"><i class="ti ti-sun-high"></i> Morning briefing</div>
-    <div class="nav-tab" id="tab-policy" onclick="switchTab('policy')"><i class="ti ti-file-certificate"></i> Policy alerts</div>
-    <div class="nav-tab" id="tab-horizon" onclick="switchTab('horizon')"><i class="ti ti-telescope"></i> Horizon scan</div>
-    <div class="nav-tab" id="tab-funding" onclick="switchTab('funding')"><i class="ti ti-coin"></i> Funding tracker</div>
-    <div class="nav-tab" id="tab-local" onclick="switchTab('local')"><i class="ti ti-map-pin"></i> Local radar</div>
-    <div class="nav-tab" id="tab-events" onclick="switchTab('events')"><i class="ti ti-calendar-event"></i> Events & CPD</div>
-    <div class="nav-tab" id="tab-saved" onclick="switchTab('saved')"><i class="ti ti-bookmark"></i> Saved</div>
-    <div class="nav-tab" id="tab-settings" onclick="switchTab('settings')"><i class="ti ti-settings"></i> Settings</div>
+    <div class="ntab on" id="t-briefing" onclick="go('briefing')"><i class="ti ti-sun-high"></i> Morning briefing</div>
+    <div class="ntab" id="t-policy" onclick="go('policy')"><i class="ti ti-file-certificate"></i> Policy alerts</div>
+    <div class="ntab" id="t-horizon" onclick="go('horizon')"><i class="ti ti-telescope"></i> Horizon scan</div>
+    <div class="ntab" id="t-funding" onclick="go('funding')"><i class="ti ti-coin"></i> Funding tracker</div>
+    <div class="ntab" id="t-local" onclick="go('local')"><i class="ti ti-map-pin"></i> Local radar</div>
+    <div class="ntab" id="t-events" onclick="go('events')"><i class="ti ti-calendar-event"></i> Events &amp; CPD</div>
+    <div class="ntab" id="t-saved" onclick="go('saved')"><i class="ti ti-bookmark"></i> Saved</div>
+    <div class="ntab" id="t-settings" onclick="go('settings')"><i class="ti ti-settings"></i> Settings</div>
   </div>
-
-  <!-- Content -->
-  <div class="content" id="main-content"></div>
-
+  <div class="body" id="mc"></div>
 </div>
-
 <script>
-// ─── State ────────────────────────────────────────────────────────────────────
+var DEF_FOCUS = ['Adult social care','NHS and ICS integration','Supported living','Day opportunities','Residential and nursing care','Co-production','Outcomes-based commissioning','Care Act','Social care workforce','North Central London ICB','Haringey Council'];
+var DEF_SOURCES = ['Kings Fund','Nuffield Trust','SCIE','LGA','ADASS','DHSC','NHS England','CQC','PPL Consulting','Carnall Farrar','Local Government Chronicle','Community Care','Health Service Journal'];
 
-const DEFAULT_FOCUS = [
-  'Adult social care','NHS and ICS integration','Supported living',
-  'Day opportunities','Residential and nursing care','Co-production',
-  'Outcomes-based commissioning','Care Act','Social care workforce',
-  'North Central London ICB','Haringey Council'
-];
-
-const DEFAULT_SOURCES = [
-  'Kings Fund','Nuffield Trust','SCIE','LGA','ADASS',
-  'DHSC','NHS England','CQC','PPL Consulting','Carnall Farrar',
-  'Local Government Chronicle','Community Care','Health Service Journal'
-];
-
-let S = {
-  apiKey: localStorage.getItem('cih_key') || '',
+var S = {
+  key: localStorage.getItem('k') || '',
   tab: 'briefing',
-  loading: false,
+  busy: false,
   result: null,
-  resultTitle: '',
-  saved: JSON.parse(localStorage.getItem('cih_saved') || '[]'),
-  focus: JSON.parse(localStorage.getItem('cih_focus') || JSON.stringify(DEFAULT_FOCUS)),
-  sources: JSON.parse(localStorage.getItem('cih_sources') || JSON.stringify(DEFAULT_SOURCES)),
-  locality: localStorage.getItem('cih_locality') || 'Haringey, North London',
-  personas: [],
-  panelText: '',
+  rtitle: '',
+  saved: JSON.parse(localStorage.getItem('sv') || '[]'),
+  focus: JSON.parse(localStorage.getItem('fc') || JSON.stringify(DEF_FOCUS)),
+  sources: JSON.parse(localStorage.getItem('sc') || JSON.stringify(DEF_SOURCES)),
+  loc: localStorage.getItem('lc') || 'Haringey, North London',
   policyTopic: '',
   horizonTopic: '',
   fundingTopic: '',
+  eventThemes: [],
+  eventFormat: 'all',
+  eventCustom: ''
 };
 
-function persist() {
-  localStorage.setItem('cih_saved', JSON.stringify(S.saved));
-  localStorage.setItem('cih_focus', JSON.stringify(S.focus));
-  localStorage.setItem('cih_sources', JSON.stringify(S.sources));
-  localStorage.setItem('cih_locality', S.locality);
+function save() {
+  localStorage.setItem('sv', JSON.stringify(S.saved));
+  localStorage.setItem('fc', JSON.stringify(S.focus));
+  localStorage.setItem('sc', JSON.stringify(S.sources));
+  localStorage.setItem('lc', S.loc);
 }
 
-function saveKey() { localStorage.setItem('cih_key', S.apiKey); }
+function saveKey() { localStorage.setItem('k', S.key); }
 
-// ─── Personas ─────────────────────────────────────────────────────────────────
+function fmtDate(d) {
+  return d.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+}
 
-const PERSONAS = [
-  { id:'margaret', name:'Margaret', role:'Family member', init:'M', bg:'#F4C0D1', fg:'#72243E',
-    desc:"Her mother is in a Haringey residential care home. Articulate, emotionally invested, distrustful of council bureaucracy, has been let down before. Asks: will this actually improve life for my mum?" },
-  { id:'rajiv', name:'Rajiv', role:'Local journalist', init:'R', bg:'#B5D4F4', fg:'#0C447C',
-    desc:"Haringey-based reporter. Looks for the political angle, wasted money, broken promises. Writes for readers who are residents and carers." },
-  { id:'diane', name:'Diane', role:'Director of ACS', init:'D', bg:'#C0DD97', fg:'#27500A',
-    desc:"Director of Adult Social Care. Experienced, politically astute, financially pressured. Supportive but demanding. Asks: is this deliverable, defensible, and will it survive scrutiny?" },
-  { id:'priya', name:'Priya', role:'ICB Chief Officer', init:'P', bg:'#9FE1CB', fg:'#085041',
-    desc:"NHS mindset, integration-focused, time-poor, wary of council bureaucracy. Asks: why should I prioritise this, and what's in it for the system?" },
-  { id:'frank', name:'Frank', role:'Finance Director', init:'F', bg:'#FAC775', fg:'#633806',
-    desc:"Has seen too many commissioning initiatives promise the earth and underdeliver. Asks: where's the evidence, what's the cost, and what's the exit if it doesn't work?" },
-  { id:'joyce', name:'Joyce', role:'Frontline care worker', init:'J', bg:'#F5C4B3', fg:'#712B13',
-    desc:"15 years in supported living. Practical, grounded, tired of strategies that don't understand the reality of the job. Asks: have you actually thought about how this works on the ground?" },
-  { id:'tariq', name:'Tariq', role:'Provider CEO', init:'T', bg:'#CECBF6', fg:'#3C3489',
-    desc:"Medium-sized social care provider. Commercial, relationship-focused. Asks: is this a genuine partnership or are you just passing risk to us?" }
-];
+function fmtDT(iso) {
+  var d = new Date(iso);
+  return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) + ' · ' + d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+}
 
-// ─── Prompt builder ───────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function go(tab) {
+  S.tab = tab;
+  document.querySelectorAll('.ntab').forEach(function(el){el.classList.remove('on');});
+  var el = document.getElementById('t-' + tab);
+  if (el) el.classList.add('on');
+  render();
+}
+
+function updateDot() {
+  var dot = document.getElementById('dot');
+  var lbl = document.getElementById('dotlbl');
+  if (!dot || !lbl) return;
+  if (S.key) { dot.className = 'dot live'; lbl.textContent = 'API ready'; }
+  else { dot.className = 'dot'; lbl.textContent = 'Add API key'; }
+}
 
 function buildPrompt(type, extra) {
-  const focus = S.focus.join(', ');
-  const sources = S.sources.join(', ');
-  const loc = S.locality;
-  const d = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+  var focus = S.focus.join(', ');
+  var sources = S.sources.join(', ');
+  var loc = S.loc;
+  var d = new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  var p = '';
 
-  const P = {
-
-    briefing: `You are a commissioning intelligence assistant for a Senior Commissioner in Adult Social Care at ${loc}. Today is ${d}.
-
-Search the web for today's most relevant news and developments. Produce a structured morning briefing with these sections:
-
-1. TOP STORY — the single most important development for adult social care today, with your analysis of its commissioning implications
-2. NATIONAL POLICY — DHSC, NHS England, DLUHC, Cabinet Office, or government announcements relevant to adult social care or health integration
-3. NHS & INTEGRATION — ICS, ICB, and integrated care system developments, including any NCL-specific news
-4. SECTOR INTELLIGENCE — new publications, commentary, or reports from: ${sources}
-5. LOCAL RADAR — anything specific to ${loc}, Haringey, or North Central London
-6. FUNDING & FINANCE — new funding streams, grants, financial guidance, or budget developments
-7. ONE TO WATCH — an emerging issue not yet widely discussed but worth monitoring over the coming weeks
-
-Focus areas to prioritise: ${focus}.
-
-Be concise and analytical — I am a busy senior commissioner. After each item add one sentence: "Commissioning implication: [your analysis]". Flag anything marked ACTION REQUIRED if I need to respond to a consultation or deadline. Cite your sources with publication names and dates.`,
-
-    policy: `You are a policy intelligence advisor for a Senior Commissioner in Adult Social Care at ${loc}. Today is ${d}.${extra ? `\n\nSpecific focus requested: ${extra}\n` : ''}
-
-Search the web and produce a policy alert covering:
-
-1. LIVE CONSULTATIONS — any open government, NHS, or regulatory consultations I should consider responding to, with closing dates
-2. RECENT DECISIONS — policy announcements, statutory guidance, or circulars published in the last 14 days
-3. UPCOMING REVIEWS — known upcoming spending reviews, white papers, independent reviews, or policy consultations launching soon
-4. PARLIAMENTARY ACTIVITY — relevant House of Commons or Lords select committee inquiries, oral questions, or written answers in the last week
-5. REGULATORY UPDATES — CQC inspection framework changes, new guidance, or enforcement notices relevant to adult social care
-6. LEGAL DEVELOPMENTS — any case law, judicial reviews, or ombudsman decisions relevant to commissioning practice
-
-For each item include: source, date, and one sentence on implications for a commissioner at ${loc}. Flag any items requiring a response or decision. Focus areas: ${focus}. Cite sources clearly.`,
-
-    horizon: `You are a horizon scanning advisor for a Senior Commissioner in Adult Social Care at ${loc}. Today is ${d}.${extra ? `\n\nTopic: ${extra}\n` : ''}
-
-Search the web and produce a horizon scan covering:
-
-1. EMERGING COMMISSIONING PRACTICE — innovative approaches, new models, or emerging good practice from other councils, NHS bodies, or internationally
-2. RESEARCH & EVIDENCE — new peer-reviewed studies or think-tank research relevant to adult social care commissioning (especially from: ${sources})
-3. TECHNOLOGY & INNOVATION — digital tools, data analytics, tech-enabled care, or AI applications in social care commissioning
-4. WORKFORCE & MARKET — staffing trends, provider market developments, wage pressures, or workforce strategy innovations
-5. FINANCIAL INNOVATION — new approaches to value-for-money, social value, or financial sustainability in commissioning
-6. POLITICAL SIGNALS — longer-horizon political signals, party policy development, or manifesto commitments relevant to social care
-7. COMMISSIONER'S OPPORTUNITY — one specific, concrete opportunity this horizon creates for a proactive commissioner at ${loc}
-
-Be analytical and forward-looking. For each item estimate a timeframe (now / 6-12 months / 2-3 years). Cite sources. Focus areas: ${focus}.`,
-
-    funding: `You are a funding intelligence advisor for a Senior Commissioner in Adult Social Care at ${loc}. Today is ${d}.${extra ? `\n\nArea of interest: ${extra}\n` : ''}
-
-Search the web and produce a funding and grants alert covering:
-
-1. OPEN FUNDING — currently open funding streams, grants, or commissioning opportunities from DHSC, NHS England, DLUHC, UKRI, lottery bodies, or major foundations relevant to adult social care in ${loc}
-2. CLOSING SOON — funding opportunities closing in the next 8 weeks (include exact deadlines)
-3. RECENTLY ANNOUNCED — new funding programmes announced in the last month, including eligibility criteria
-4. FORMULA FUNDING CHANGES — any changes to core local authority or NHS funding allocations, Better Care Fund, or ASCH grant
-5. INNOVATION FUNDS — any test-and-learn, pilot, or innovation funding relevant to commissioning transformation
-6. PARTNERSHIP OPPORTUNITIES — funding that requires or incentivises joint commissioning with NHS, VCSE, or other partners
-
-For each item: source, amount (if known), deadline, eligibility, and one sentence on relevance to ${loc}. Focus areas: ${focus}.`,
-
-    local: `You are a local intelligence advisor for a Senior Commissioner in Adult Social Care at ${loc}. Today is ${d}.
-
-Search the web and produce a local radar briefing covering:
-
-1. HARINGEY COUNCIL — any published council papers, cabinet decisions, scrutiny committee activity, or public consultations relevant to adult social care, housing, or health
-2. NORTH CENTRAL LONDON ICB — any published board papers, strategies, minutes, or announcements from NCL ICB
-3. PROVIDER NEWS — any news about social care providers operating in Haringey or North London (openings, closures, CQC ratings, workforce issues)
-4. LOCAL DEMOGRAPHIC & NEEDS — any published data, research, or reports on population needs, health inequalities, or social care demand in Haringey or North London
-5. VOLUNTARY SECTOR — any news from VCSE organisations operating in Haringey relevant to social care commissioning
-6. COMPARATOR AUTHORITIES — any interesting developments from comparable London boroughs or councils relevant to adult social care commissioning
-
-For each item: source, date, and commissioning implication. Flag anything requiring a political or operational response. Cite sources clearly.`,
-
-    panel: `You are hosting a critical appraisal panel for a Senior Commissioner in Adult Social Care. The personas below will each challenge the following proposal from their own perspective. Inhabit each persona fully — be direct, sometimes uncomfortable, always useful. Do not break character or add meta-commentary.
-
-PROPOSAL TO APPRAISE:
-${extra}
-
-${S.personas.map(id => {
-  const p = PERSONAS.find(x => x.id === id);
-  return p ? `${p.name.toUpperCase()} (${p.role}): ${p.desc}` : '';
-}).filter(Boolean).join('\n')}
-
-For each persona: give their name and role as a heading, then their honest, in-character reaction (5–7 sentences). After all personas speak, write a DEBRIEF section that synthesises the 3 most important challenges I need to address before taking this forward, and suggests one concrete next step for each.`
-
-
-    events: `You are a learning and development advisor for a Senior Commissioner in Adult Social Care at ${loc}. Today is ${d}.
-
-${extra ? `The person is specifically interested in: ${extra}\n` : ''}${(S.eventThemes && S.eventThemes.length > 0) ? `Preferred themes: ${S.eventThemes.join(', ')}\n` : ''}${(S.eventFormat && S.eventFormat !== 'all') ? `Preferred format: ${S.eventFormat}\n` : ''}
-
-Search the web for upcoming events, conferences, and CPD opportunities in the next 6 months that would be valuable for a Senior Commissioner in Adult Social Care with a strong interest in health integration, service design, and commissioning innovation. Include:
-
-1. SOCIAL CARE AND HEALTH — conferences, summits, and national events from ADASS, LGA, SCIE, Kings Fund, Nuffield Trust, NHS Confederation, NHS England, NCL ICB, or similar bodies
-2. COMMISSIONING AND PROCUREMENT — specialist events on commissioning practice, outcomes-based approaches, market management, or procurement
-3. SERVICE DESIGN AND INNOVATION — events from wider sectors (private, tech, design) that a curious, creative commissioner would benefit from — include Service Design Network, FutureGov, design thinking conferences, public sector innovation events
-4. LEADERSHIP AND ORGANISATIONAL DEVELOPMENT — events focused on public sector leadership, team culture, or organisational development
-5. LOCAL AND REGIONAL — any events specific to London, North Central London, or local government in the South East
-6. FREE OR LOW-COST OPTIONS — any webinars, online events, or free CPD opportunities worth noting
-
-For each event include: name, organiser, date(s), location or online, approximate cost if known, and one sentence on why it is relevant for this role. Flag events with early-bird deadlines. Organise by date order within each section.`
-  };
-
-  return P[type] || '';
+  if (type === 'briefing') {
+    p = 'You are a commissioning intelligence assistant for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n\n';
+    p += 'Search the web for the most relevant news and developments. Produce a structured morning briefing:\n\n';
+    p += '1. TOP STORY — the single most important development for adult social care today, with your analysis of its commissioning implications\n';
+    p += '2. NATIONAL POLICY — DHSC, NHS England, DLUHC, or government announcements relevant to adult social care or health integration\n';
+    p += '3. NHS AND INTEGRATION — ICS, ICB, and integrated care developments, including any NCL-specific news\n';
+    p += '4. SECTOR INTELLIGENCE — new publications or commentary from: ' + sources + '\n';
+    p += '5. LOCAL RADAR — anything specific to ' + loc + ' or North Central London\n';
+    p += '6. FUNDING AND FINANCE — new funding streams, grants, or financial developments\n';
+    p += '7. ONE TO WATCH — an emerging issue worth monitoring\n\n';
+    p += 'Focus areas: ' + focus + '. Be concise. After each item add one sentence: Commissioning implication: [analysis]. Flag anything ACTION REQUIRED. Cite sources with dates.';
+  } else if (type === 'policy') {
+    p = 'You are a policy intelligence advisor for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n';
+    if (extra) p += 'Specific focus: ' + extra + '\n';
+    p += '\nSearch the web and produce a policy alert:\n\n';
+    p += '1. LIVE CONSULTATIONS — open consultations with closing dates\n';
+    p += '2. RECENT DECISIONS — policy announcements or guidance in the last 14 days\n';
+    p += '3. UPCOMING REVIEWS — known upcoming spending reviews, white papers, or consultations\n';
+    p += '4. PARLIAMENTARY ACTIVITY — relevant select committee inquiries or written answers this week\n';
+    p += '5. REGULATORY UPDATES — CQC inspection framework changes or new guidance\n';
+    p += '6. LEGAL DEVELOPMENTS — case law, judicial reviews, or ombudsman decisions\n\n';
+    p += 'For each item: source, date, and one sentence on implications for a commissioner at ' + loc + '. Focus areas: ' + focus + '.';
+  } else if (type === 'horizon') {
+    p = 'You are a horizon scanning advisor for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n';
+    if (extra) p += 'Topic: ' + extra + '\n';
+    p += '\nSearch the web and produce a horizon scan:\n\n';
+    p += '1. EMERGING COMMISSIONING PRACTICE — innovative approaches or new models from other councils or NHS bodies\n';
+    p += '2. RESEARCH AND EVIDENCE — new peer-reviewed or think-tank research relevant to adult social care commissioning\n';
+    p += '3. TECHNOLOGY AND INNOVATION — digital tools, data analytics, or tech-enabled care developments\n';
+    p += '4. WORKFORCE AND MARKET — staffing trends, provider market developments, or workforce strategy innovations\n';
+    p += '5. FINANCIAL INNOVATION — new approaches to value-for-money or financial sustainability in commissioning\n';
+    p += '6. POLITICAL SIGNALS — longer-horizon political signals or manifesto commitments\n';
+    p += '7. COMMISSIONER\'S OPPORTUNITY — one specific concrete opportunity this creates for a proactive commissioner at ' + loc + '\n\n';
+    p += 'For each item estimate a timeframe: now, 6-12 months, or 2-3 years. Cite sources. Focus areas: ' + focus + '.';
+  } else if (type === 'funding') {
+    p = 'You are a funding intelligence advisor for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n';
+    if (extra) p += 'Area of interest: ' + extra + '\n';
+    p += '\nSearch the web and produce a funding alert:\n\n';
+    p += '1. OPEN FUNDING — currently open funding streams from DHSC, NHS England, DLUHC, UKRI, lottery bodies, or major foundations\n';
+    p += '2. CLOSING SOON — funding opportunities closing in the next 8 weeks with exact deadlines\n';
+    p += '3. RECENTLY ANNOUNCED — new funding programmes announced in the last month\n';
+    p += '4. FORMULA FUNDING CHANGES — any changes to core local authority or NHS funding allocations or Better Care Fund\n';
+    p += '5. INNOVATION FUNDS — test-and-learn, pilot, or innovation funding relevant to commissioning transformation\n';
+    p += '6. PARTNERSHIP OPPORTUNITIES — funding requiring or incentivising joint commissioning\n\n';
+    p += 'For each: source, amount if known, deadline, eligibility, and relevance to ' + loc + '. Focus areas: ' + focus + '.';
+  } else if (type === 'local') {
+    p = 'You are a local intelligence advisor for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n\n';
+    p += 'Search the web and produce a local radar briefing:\n\n';
+    p += '1. HARINGEY COUNCIL — published council papers, cabinet decisions, scrutiny committee activity, or public consultations relevant to adult social care, housing, or health\n';
+    p += '2. NORTH CENTRAL LONDON ICB — published board papers, strategies, minutes, or announcements from NCL ICB\n';
+    p += '3. PROVIDER NEWS — news about social care providers in Haringey or North London including CQC ratings or workforce issues\n';
+    p += '4. LOCAL DEMOGRAPHIC AND NEEDS — published data or research on population needs or health inequalities in Haringey\n';
+    p += '5. VOLUNTARY SECTOR — news from VCSE organisations in Haringey relevant to social care commissioning\n';
+    p += '6. COMPARATOR AUTHORITIES — interesting developments from comparable London boroughs\n\n';
+    p += 'For each: source, date, and commissioning implication. Flag anything requiring a political or operational response.';
+  } else if (type === 'events') {
+    p = 'You are a learning and development advisor for a Senior Commissioner in Adult Social Care at ' + loc + '. Today is ' + d + '.\n';
+    if (extra) p += 'Interests: ' + extra + '\n';
+    p += '\nSearch the web for upcoming events, conferences, and CPD opportunities in the next 6 months. Include:\n\n';
+    p += '1. SOCIAL CARE AND HEALTH — conferences, summits, and national events from ADASS, LGA, SCIE, Kings Fund, Nuffield Trust, NHS Confederation, NHS England, or similar\n';
+    p += '2. COMMISSIONING AND PROCUREMENT — specialist events on commissioning practice, outcomes-based approaches, or market management\n';
+    p += '3. SERVICE DESIGN AND INNOVATION — events from wider sectors including Service Design Network, FutureGov, design thinking conferences, and public sector innovation events\n';
+    p += '4. LEADERSHIP AND ORGANISATIONAL DEVELOPMENT — events on public sector leadership, team culture, or organisational development\n';
+    p += '5. LOCAL AND REGIONAL — events specific to London, North Central London, or local government in the South East\n';
+    p += '6. FREE OR LOW-COST OPTIONS — webinars, online events, or free CPD worth noting\n\n';
+    p += 'For each event: name, organiser, date, location or online, approximate cost if known, and one sentence on why it is relevant. Flag early-bird deadlines. List in date order within each section.';
+  }
+  return p;
 }
 
-// ─── API call ─────────────────────────────────────────────────────────────────
-
-async function runQuery(type, extra='') {
-  if (!S.apiKey) { alert('Add your Claude API key in Settings first.'); return; }
-  if (type === 'events') {
-    const parts = [];
-    if (S.eventThemes && S.eventThemes.length > 0) parts.push('Themes: ' + S.eventThemes.join(', '));
-    if (S.eventFormat && S.eventFormat !== 'all') parts.push('Format: ' + S.eventFormat);
-    if (S.eventCustom && S.eventCustom.trim()) parts.push(S.eventCustom.trim());
-    extra = parts.join('. ');
-  }
-  if (type === 'panel') {
-    if (S.personas.length === 0) { alert('Select at least one persona.'); return; }
-    if (!S.panelText.trim()) { alert('Describe your proposal first.'); return; }
-    extra = S.panelText;
-  }
-
-  S.loading = true; S.result = null; S.resultTitle = '';
+async function run(type, extra) {
+  extra = extra || '';
+  if (!S.key) { alert('Add your Claude API key in Settings first.'); return; }
+  S.busy = true; S.result = null; S.rtitle = '';
   render();
-
-  const titles = {
-    briefing: 'Morning briefing — ' + fmtDate(new Date()),
-    policy: 'Policy alert — ' + fmtDate(new Date()),
-    horizon: 'Horizon scan — ' + fmtDate(new Date()),
-    funding: 'Funding tracker — ' + fmtDate(new Date()),
-    local: 'Local radar — ' + fmtDate(new Date()),
-    events: 'Events and CPD — ' + fmtDate(new Date()),
-    panel: 'Critical appraisal — ' + fmtDate(new Date())
-  };
-
+  var d = fmtDate(new Date());
+  var titles = {briefing:'Morning briefing — '+d, policy:'Policy alert — '+d, horizon:'Horizon scan — '+d, funding:'Funding tracker — '+d, local:'Local radar — '+d, events:'Events and CPD — '+d};
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': S.apiKey,
+        'x-api-key': S.key,
         'anthropic-version': '2023-06-01',
         'anthropic-dangerous-direct-browser-access': 'true'
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1500,
-        tools: [{ type: 'web_search_20250305', name: 'web_search' }],
-        messages: [{ role: 'user', content: buildPrompt(type, extra) }]
+        tools: [{type:'web_search_20250305',name:'web_search'}],
+        messages: [{role:'user',content:buildPrompt(type,extra)}]
       })
     });
     if (!resp.ok) {
-      const errData = await resp.json().catch(() => ({}));
-      throw new Error('HTTP ' + resp.status + ': ' + (errData.error?.message || resp.statusText));
+      var ed = await resp.json().catch(function(){return {};});
+      throw new Error('HTTP ' + resp.status + ': ' + ((ed.error && ed.error.message) || resp.statusText));
     }
-    const data = await resp.json();
+    var data = await resp.json();
     if (data.error) throw new Error(data.error.message);
-    const text = data.content.filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
-    S.result = text || 'No content returned. Try again.';
-    S.resultTitle = titles[type] || type;
+    var text = data.content.filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('\n').trim();
+    S.result = text || 'No content returned — please try again.';
+    S.rtitle = titles[type] || type;
   } catch(e) {
-    S.result = 'Error: ' + e.message + '\n\nThings to check:\n• API key is correct (Settings tab)\n• You have credits on your Anthropic account (console.anthropic.com)\n• Your account has access to claude-sonnet-4-20250514\n\nIf the error says 401, your API key is wrong or expired.\nIf it says 400, the model or tool name may have changed — open the file in a text editor and update the model string.';
-    S.resultTitle = 'Error — tap to read';
+    S.result = 'Error: ' + e.message + '\n\nThings to check:\n- API key is correct (Settings tab)\n- You have credits on your Anthropic account at console.anthropic.com\n- If the error says 401, your API key is wrong or expired\n- If it says 400, try again in a moment';
+    S.rtitle = 'Error';
   }
-
-  S.loading = false;
+  S.busy = false;
   render();
 }
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-function fmtDate(d) {
-  return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
-}
-
-function fmtDateTime(iso) {
-  const d = new Date(iso);
-  return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) +
-    ' · ' + d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
-}
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-function updateStatusBar() {
-  const dot = document.getElementById('status-dot');
-  const txt = document.getElementById('status-text');
-  if (!dot || !txt) return;
-  if (S.apiKey) { dot.className = 'status-dot live'; txt.textContent = 'API ready'; }
-  else { dot.className = 'status-dot'; txt.textContent = 'Add API key'; }
-}
-
-function saveCurrentResult() {
+function saveResult() {
   if (!S.result) return;
-  S.saved.unshift({ id: Date.now(), title: S.resultTitle, content: S.result, date: new Date().toISOString() });
-  if (S.saved.length > 30) S.saved = S.saved.slice(0, 30);
-  persist();
+  S.saved.unshift({id:Date.now(),title:S.rtitle,content:S.result,date:new Date().toISOString()});
+  if (S.saved.length > 30) S.saved = S.saved.slice(0,30);
+  save();
   alert('Saved to library.');
 }
 
-function copyCurrentResult() {
+function copyResult() {
   if (!S.result) return;
-  navigator.clipboard.writeText(S.result).then(() => alert('Copied to clipboard.')).catch(() => alert('Copy failed — try selecting and copying manually.'));
+  navigator.clipboard.writeText(S.result).then(function(){alert('Copied to clipboard.');}).catch(function(){alert('Copy failed — select the text and copy manually.');});
 }
 
-function deleteSaved(id) {
-  S.saved = S.saved.filter(x => x.id !== id);
-  persist(); render();
-}
+function delSaved(id) { S.saved = S.saved.filter(function(x){return x.id!==id;}); save(); render(); }
 
 function viewSaved(id) {
-  const item = S.saved.find(x => x.id === id);
+  var item = S.saved.find(function(x){return x.id===id;});
   if (!item) return;
-  S.result = item.content;
-  S.resultTitle = item.title;
-  S.tab = 'briefing';
-  render();
+  S.result = item.content; S.rtitle = item.title;
+  go('briefing');
 }
-
-// ─── Result renderer ──────────────────────────────────────────────────────────
 
 function resultHtml() {
-  if (S.loading) return `<div class="result-box"><div class="loading-state"><div class="spinner"></div><span>Searching the web and analysing — usually 20–40 seconds...</span></div></div>`;
-  if (!S.result) return `<div class="result-box"><div class="empty-state"><i class="ti ti-news"></i>Your briefing will appear here</div></div>`;
-  return `<div class="result-box">
-    <div class="result-bar">
-      <span class="result-bar-title">${esc(S.resultTitle)}</span>
-      <div class="result-actions">
-        <button class="icon-btn" onclick="copyCurrentResult()"><i class="ti ti-copy"></i> Copy</button>
-        <button class="icon-btn" onclick="saveCurrentResult()"><i class="ti ti-bookmark"></i> Save</button>
-      </div>
-    </div>
-    <div class="result-body">${esc(S.result)}</div>
-  </div>`;
+  if (S.busy) return '<div class="rbox"><div class="loading"><div class="spin"></div><span>Searching the web and analysing — usually 20 to 40 seconds...</span></div></div>';
+  if (!S.result) return '<div class="rbox"><div class="empty"><i class="ti ti-news"></i>Your results will appear here</div></div>';
+  return '<div class="rbox"><div class="rbar"><span class="rtitle">' + esc(S.rtitle) + '</span><div class="ract"><button class="ibtn" onclick="copyResult()"><i class="ti ti-copy"></i> Copy</button><button class="ibtn" onclick="saveResult()"><i class="ti ti-bookmark"></i> Save</button></div></div><div class="rbody">' + esc(S.result) + '</div></div>';
 }
 
-// ─── Tab renderers ────────────────────────────────────────────────────────────
-
-function renderBriefing() {
-  const hasKey = !!S.apiKey;
-  return `
-    ${!hasKey ? `<div class="info-banner"><i class="ti ti-info-circle"></i><p>Add your Claude API key in <strong>Settings</strong> to activate. Get one free at <a onclick="switchTab('settings')">console.anthropic.com</a>. Your key is stored only on this device.</p></div>` : ''}
-    <p class="section-label">Quick launch</p>
-    <div class="launch-grid">
-      <button class="launch-btn" onclick="runQuery('briefing')" ${S.loading?'disabled':''}>
-        <i class="ti ti-sun-high launch-icon"></i>
-        <span class="launch-title">Morning briefing</span>
-        <span class="launch-desc">Full daily digest — news, policy, and sector intelligence</span>
-      </button>
-      <button class="launch-btn" onclick="switchTab('policy')">
-        <i class="ti ti-file-certificate launch-icon"></i>
-        <span class="launch-title">Policy alerts</span>
-        <span class="launch-desc">Consultations, decisions, and upcoming reviews</span>
-      </button>
-      <button class="launch-btn" onclick="switchTab('horizon')">
-        <i class="ti ti-telescope launch-icon"></i>
-        <span class="launch-title">Horizon scan</span>
-        <span class="launch-desc">Emerging practice, research, and innovation</span>
-      </button>
-    </div>
-    ${resultHtml()}`;
+function pillsHtml(list, active, onclick) {
+  return list.map(function(t){
+    var isOn = Array.isArray(active) ? active.indexOf(t) >= 0 : active === t;
+    return '<div class="pill ' + (isOn?'on':'') + '" onclick="' + onclick.replace('__T__', t.replace(/'/g,"\\'")) + '">' + esc(t) + '</div>';
+  }).join('');
 }
 
-function renderPolicy() {
-  const pills = ['Social care reform','Charging reform','Care Act duties','CQC inspection framework',
-    'ICS integration','Workforce strategy','Supported living regulation','Direct payments',
-    'Mental health commissioning','Learning disability','Autism strategy','Safeguarding'];
-  return `
-    <p class="section-label">Focus topic — optional</p>
-    <div class="pill-row">${pills.map(t => `<div class="pill ${S.policyTopic===t?'active':''}" onclick="S.policyTopic='${t}';render()">${t}</div>`).join('')}</div>
-    <div class="input-row">
-      <input type="text" placeholder="Or type a specific topic or Bill name..." value="${esc(S.policyTopic)}" oninput="S.policyTopic=this.value">
-      <button class="run-btn" onclick="runQuery('policy',S.policyTopic)" ${S.loading?'disabled':''}><i class="ti ti-search"></i> Run alert</button>
-    </div>
-    ${resultHtml()}`;
+function rBriefing() {
+  var nokey = !S.key ? '<div class="info"><i class="ti ti-info-circle"></i><p>Add your Claude API key in <strong>Settings</strong> to activate. Get one at console.anthropic.com — your key is stored only on this device.</p></div>' : '';
+  return nokey + '<p class="lbl">Quick launch</p><div class="lgrid"><button class="lbtn" onclick="run(\'briefing\')" ' + (S.busy?'disabled':'') + '><i class="ti ti-sun-high"></i><strong>Morning briefing</strong><span>Full daily digest — news, policy, and sector intelligence</span></button><button class="lbtn" onclick="go(\'policy\')"><i class="ti ti-file-certificate"></i><strong>Policy alerts</strong><span>Consultations, decisions, and upcoming reviews</span></button><button class="lbtn" onclick="go(\'horizon\')"><i class="ti ti-telescope"></i><strong>Horizon scan</strong><span>Emerging practice, research, and innovation</span></button></div>' + resultHtml();
 }
 
-function renderHorizon() {
-  const pills = ['Outcomes-based commissioning','Co-production models','Market shaping innovation',
-    'Social prescribing','Supported living futures','Digital care planning','Population health management',
-    'Strengths-based approaches','Integrated neighbourhood teams','Workforce innovation',
-    'Data and analytics in commissioning','International models'];
-  return `
-    <p class="section-label">Scan area — optional</p>
-    <div class="pill-row">${pills.map(t => `<div class="pill ${S.horizonTopic===t?'active':''}" onclick="S.horizonTopic='${t}';render()">${t}</div>`).join('')}</div>
-    <div class="input-row">
-      <input type="text" placeholder="Or type a specific area to scan..." value="${esc(S.horizonTopic)}" oninput="S.horizonTopic=this.value">
-      <button class="run-btn" onclick="runQuery('horizon',S.horizonTopic)" ${S.loading?'disabled':''}><i class="ti ti-telescope"></i> Scan now</button>
-    </div>
-    ${resultHtml()}`;
+function rPolicy() {
+  var topics = ['Social care reform','Charging reform','Care Act duties','CQC inspection framework','ICS integration','Workforce strategy','Supported living regulation','Direct payments','Mental health commissioning','Learning disability','Autism strategy','Safeguarding'];
+  return '<p class="lbl">Focus topic — optional</p><div class="pills">' + pillsHtml(topics, S.policyTopic, 'S.policyTopic=\'__T__\';render()') + '</div><div class="irow"><input type="text" placeholder="Or type a specific topic..." value="' + esc(S.policyTopic) + '" oninput="S.policyTopic=this.value"><button class="rbtn" onclick="run(\'policy\',S.policyTopic)" ' + (S.busy?'disabled':'') + '><i class="ti ti-search"></i> Run alert</button></div>' + resultHtml();
 }
 
-function renderFunding() {
-  const pills = ['Day opportunities','Supported living','Residential care','Workforce development',
-    'Technology and digital','Co-production and VCSE','Prevention and early intervention',
-    'Mental health','Housing and care','Social prescribing'];
-  return `
-    <p class="section-label">Area of interest — optional</p>
-    <div class="pill-row">${pills.map(t => `<div class="pill ${S.fundingTopic===t?'active':''}" onclick="S.fundingTopic='${t}';render()">${t}</div>`).join('')}</div>
-    <div class="input-row">
-      <input type="text" placeholder="Or type a specific funding area..." value="${esc(S.fundingTopic)}" oninput="S.fundingTopic=this.value">
-      <button class="run-btn" onclick="runQuery('funding',S.fundingTopic)" ${S.loading?'disabled':''}><i class="ti ti-coin"></i> Search funding</button>
-    </div>
-    ${resultHtml()}`;
+function rHorizon() {
+  var topics = ['Outcomes-based commissioning','Co-production models','Market shaping innovation','Social prescribing','Supported living futures','Digital care planning','Population health management','Strengths-based approaches','Integrated neighbourhood teams','Workforce innovation','Data and analytics','International models'];
+  return '<p class="lbl">Scan area — optional</p><div class="pills">' + pillsHtml(topics, S.horizonTopic, 'S.horizonTopic=\'__T__\';render()') + '</div><div class="irow"><input type="text" placeholder="Or type a specific area..." value="' + esc(S.horizonTopic) + '" oninput="S.horizonTopic=this.value"><button class="rbtn" onclick="run(\'horizon\',S.horizonTopic)" ' + (S.busy?'disabled':'') + '><i class="ti ti-search"></i> Scan now</button></div>' + resultHtml();
 }
 
-function renderLocal() {
-  return `
-    <div class="info-banner"><i class="ti ti-map-pin"></i><p>Searches for intelligence specific to <strong>${esc(S.locality)}</strong> and North Central London. Change your locality in Settings.</p></div>
-    <div style="margin-bottom:14px">
-      <button class="run-btn" onclick="runQuery('local')" ${S.loading?'disabled':''}><i class="ti ti-map-pin"></i> Run local radar for ${esc(S.locality)}</button>
-    </div>
-    ${resultHtml()}`;
+function rFunding() {
+  var topics = ['Day opportunities','Supported living','Residential care','Workforce development','Technology and digital','Co-production and VCSE','Prevention and early intervention','Mental health','Housing and care','Social prescribing'];
+  return '<p class="lbl">Area of interest — optional</p><div class="pills">' + pillsHtml(topics, S.fundingTopic, 'S.fundingTopic=\'__T__\';render()') + '</div><div class="irow"><input type="text" placeholder="Or type a specific funding area..." value="' + esc(S.fundingTopic) + '" oninput="S.fundingTopic=this.value"><button class="rbtn" onclick="run(\'funding\',S.fundingTopic)" ' + (S.busy?'disabled':'') + '><i class="ti ti-coin"></i> Search funding</button></div>' + resultHtml();
 }
 
-function renderEvents() {
-  const themes = [
-    'Adult social care','Health and social care integration','Commissioning and procurement',
-    'Co-production and lived experience','Service design','Outcomes-based commissioning',
-    'Public sector leadership','Organisational development','Digital and data in public services',
-    'Housing and care','Learning disability and autism','Mental health commissioning'
-  ];
-  const formats = [
-    {id:'all',label:'All formats'},
-    {id:'conference',label:'Conferences'},
-    {id:'webinar',label:'Webinars and online'},
-    {id:'workshop',label:'Workshops'},
-    {id:'masterclass',label:'Masterclasses'}
-  ];
-  return `
-    <div class="info-banner"><i class="ti ti-calendar-event"></i><p>Searches for upcoming events, conferences, and CPD opportunities across social care, health, local government, and service design. Results include dates, organisers, and links where available.</p></div>
-    <p class="section-label">Theme — optional, select one or more</p>
-    <div class="pill-row">${themes.map(t => `<div class="pill ${(S.eventThemes||[]).includes(t)?'active':''}" onclick="toggleEventTheme('${t}')">${t}</div>`).join('')}</div>
-    <p class="section-label" style="margin-top:4px">Format preference</p>
-    <div class="pill-row">${formats.map(f => `<div class="pill ${(S.eventFormat||'all')===f.id?'active':''}" onclick="S.eventFormat='${f.id}';render()">${f.label}</div>`).join('')}</div>
-    <div class="input-row">
-      <input type="text" placeholder="Or describe what you are looking for, e.g. service design for public sector..." value="${esc(S.eventCustom||'')}" oninput="S.eventCustom=this.value">
-      <button class="run-btn" onclick="runQuery('events')" ${S.loading?'disabled':''}><i class="ti ti-search"></i> Find events</button>
-    </div>
-    ${resultHtml()}`;
+function rLocal() {
+  return '<div class="info"><i class="ti ti-map-pin"></i><p>Searches for intelligence specific to <strong>' + esc(S.loc) + '</strong> and North Central London. Change your locality in Settings.</p></div><div style="margin-bottom:14px"><button class="rbtn" onclick="run(\'local\')" ' + (S.busy?'disabled':'') + '><i class="ti ti-map-pin"></i> Run local radar</button></div>' + resultHtml();
 }
 
 function toggleEventTheme(t) {
-  if (!S.eventThemes) S.eventThemes = [];
-  const i = S.eventThemes.indexOf(t);
-  if (i >= 0) S.eventThemes.splice(i, 1); else S.eventThemes.push(t);
+  var i = S.eventThemes.indexOf(t);
+  if (i >= 0) S.eventThemes.splice(i,1); else S.eventThemes.push(t);
   render();
 }
 
-function renderSaved() {
-  if (S.saved.length === 0) return `<div class="card"><div class="empty-state"><i class="ti ti-bookmark"></i>Nothing saved yet — run any briefing and click Save</div></div>`;
-  return `<div class="card"><div class="saved-list">${S.saved.map(item => `
-    <div class="saved-item">
-      <div onclick="viewSaved(${item.id})" style="flex:1;cursor:pointer">
-        <div class="saved-title">${esc(item.title)}</div>
-        <div class="saved-meta">${fmtDateTime(item.date)}</div>
-      </div>
-      <span class="saved-badge">Saved</span>
-      <span class="delete-btn" onclick="deleteSaved(${item.id})" title="Delete">✕</span>
-    </div>`).join('')}</div></div>`;
+function rEvents() {
+  var themes = ['Adult social care','Health and social care integration','Commissioning and procurement','Co-production and lived experience','Service design','Outcomes-based commissioning','Public sector leadership','Organisational development','Digital and data in public services','Housing and care','Learning disability and autism','Mental health commissioning'];
+  var formats = [{id:'all',label:'All formats'},{id:'conference',label:'Conferences'},{id:'webinar',label:'Webinars and online'},{id:'workshop',label:'Workshops'},{id:'masterclass',label:'Masterclasses'}];
+  var themeHtml = themes.map(function(t){return '<div class="pill ' + (S.eventThemes.indexOf(t)>=0?'on':'') + '" onclick="toggleEventTheme(\'' + t.replace(/'/g,"\\'") + '\')">' + esc(t) + '</div>';}).join('');
+  var fmtHtml = formats.map(function(f){return '<div class="pill ' + (S.eventFormat===f.id?'on':'') + '" onclick="S.eventFormat=\'' + f.id + '\';render()">' + esc(f.label) + '</div>';}).join('');
+  var extra = [];
+  if (S.eventThemes.length > 0) extra.push('Themes: ' + S.eventThemes.join(', '));
+  if (S.eventFormat !== 'all') extra.push('Format: ' + S.eventFormat);
+  if (S.eventCustom && S.eventCustom.trim()) extra.push(S.eventCustom.trim());
+  var extraStr = extra.join('. ');
+  return '<div class="info"><i class="ti ti-calendar-event"></i><p>Searches for upcoming events, conferences, and CPD opportunities across social care, health, local government, and service design. Results include dates, organisers, and costs where available.</p></div><p class="lbl">Theme — select one or more</p><div class="pills">' + themeHtml + '</div><p class="lbl" style="margin-top:4px">Format preference</p><div class="pills">' + fmtHtml + '</div><div class="irow"><input type="text" placeholder="Or describe what you are looking for..." value="' + esc(S.eventCustom) + '" oninput="S.eventCustom=this.value"><button class="rbtn" onclick="run(\'events\',\'' + esc(extraStr) + '\')" ' + (S.busy?'disabled':'') + '><i class="ti ti-search"></i> Find events</button></div>' + resultHtml();
 }
 
-function renderSettings() {
-  return `
-    <div class="settings-section">
-      <p class="section-label">API key</p>
-      <div class="card">
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Claude API key</div>
-            <div class="settings-sub">Get from console.anthropic.com — stored only on this device, never sent anywhere except the Anthropic API</div>
-          </div>
-          <input type="password" placeholder="sk-ant-..." value="${esc(S.apiKey)}" oninput="S.apiKey=this.value;saveKey();updateStatusBar()">
-        </div>
-      </div>
-    </div>
-
-    <div class="settings-section">
-      <p class="section-label">Briefing configuration</p>
-      <div class="card">
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Locality</div>
-            <div class="settings-sub">Used in all prompts to localise results</div>
-          </div>
-          <input type="text" value="${esc(S.locality)}" oninput="S.locality=this.value;persist()">
-        </div>
-        <div class="settings-row" style="flex-direction:column;align-items:flex-start">
-          <div>
-            <div class="settings-label">Focus areas</div>
-            <div class="settings-sub">Topics included in every briefing prompt — add your specific portfolio areas here</div>
-          </div>
-          <div class="tag-cloud">
-            ${S.focus.map((f,i) => `<div class="tag">${esc(f)} <span class="tag-remove" onclick="removeFocus(${i})">✕</span></div>`).join('')}
-            <div class="tag-add" onclick="addFocus()">+ add area</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="settings-section">
-      <p class="section-label">Sources to monitor</p>
-      <div class="card">
-        <div class="settings-row" style="flex-direction:column;align-items:flex-start">
-          <div style="margin-bottom:6px">
-            <div class="settings-label">Publications and organisations</div>
-            <div class="settings-sub">These sources are explicitly named in your briefing prompts — if a source is being missed, add it here</div>
-          </div>
-          <div class="tag-cloud">
-            ${S.sources.map((s,i) => `<div class="tag">${esc(s)} <span class="tag-remove" onclick="removeSource(${i})">✕</span></div>`).join('')}
-            <div class="tag-add" onclick="addSource()">+ add source</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="settings-section">
-      <p class="section-label">Reset</p>
-      <div class="card">
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Restore default focus areas</div>
-            <div class="settings-sub">Replaces your current focus areas with the defaults</div>
-          </div>
-          <button class="util-btn" onclick="resetFocus()">Reset focus</button>
-        </div>
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Restore default sources</div>
-            <div class="settings-sub">Replaces your current source list with the defaults</div>
-          </div>
-          <button class="util-btn" onclick="resetSources()">Reset sources</button>
-        </div>
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Clear saved library</div>
-            <div class="settings-sub">Permanently deletes all saved briefings from this device</div>
-          </div>
-          <button class="util-btn" onclick="clearSaved()">Clear saved</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="settings-section">
-      <p class="section-label">About</p>
-      <div class="card">
-        <div class="settings-row">
-          <div>
-            <div class="settings-label">Commissioning Intelligence Hub</div>
-            <div class="settings-sub">Built for a Senior Commissioner, Adult Social Care. Powered by Claude API (claude-sonnet-4-20250514) with live web search. All settings and saved items stored locally on your device only. To edit prompts or behaviour directly, open this file in any text editor and search for buildPrompt.</div>
-          </div>
-        </div>
-      </div>
-    </div>`;
+function rSaved() {
+  if (S.saved.length === 0) return '<div class="card"><div class="empty"><i class="ti ti-bookmark"></i>Nothing saved yet — run any briefing and click Save</div></div>';
+  return '<div class="card"><div>' + S.saved.map(function(item){return '<div class="sitem"><div onclick="viewSaved(' + item.id + ')" style="flex:1"><div class="stitle">' + esc(item.title) + '</div><div class="smeta">' + fmtDT(item.date) + '</div></div><span class="sbadge">Saved</span><span class="xbtn" onclick="delSaved(' + item.id + ')" title="Delete">&#x2715;</span></div>';}).join('') + '</div></div>';
 }
 
-// ─── Settings actions ─────────────────────────────────────────────────────────
-
-function removeFocus(i) { S.focus.splice(i,1); persist(); render(); }
-function addFocus() {
-  const t = prompt('Add focus area (e.g. "Residential care", "Mental health"):');
-  if (t && t.trim()) { S.focus.push(t.trim()); persist(); render(); }
-}
-function resetFocus() { if (confirm('Reset to default focus areas?')) { S.focus = [...DEFAULT_FOCUS]; persist(); render(); } }
-
-function removeSource(i) { S.sources.splice(i,1); persist(); render(); }
-function addSource() {
-  const t = prompt('Add source to monitor (e.g. "Social Care Institute for Excellence", "BMJ"):');
-  if (t && t.trim()) { S.sources.push(t.trim()); persist(); render(); }
-}
-function resetSources() { if (confirm('Reset to default sources?')) { S.sources = [...DEFAULT_SOURCES]; persist(); render(); } }
-
-function clearSaved() { if (confirm('Delete all saved briefings? This cannot be undone.')) { S.saved = []; persist(); render(); } }
-
-// ─── Tab switching ────────────────────────────────────────────────────────────
-
-function switchTab(tab) {
-  S.tab = tab;
-  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
-  const el = document.getElementById('tab-' + tab);
-  if (el) el.classList.add('active');
-  render();
+function rSettings() {
+  var focusTags = S.focus.map(function(f,i){return '<div class="tag">' + esc(f) + ' <span class="tag-x" onclick="rmFocus(' + i + ')">&#x2715;</span></div>';}).join('') + '<div class="tag-add" onclick="addFocus()">+ add area</div>';
+  var srcTags = S.sources.map(function(s,i){return '<div class="tag">' + esc(s) + ' <span class="tag-x" onclick="rmSource(' + i + ')">&#x2715;</span></div>';}).join('') + '<div class="tag-add" onclick="addSource()">+ add source</div>';
+  return '<div class="ssec"><p class="lbl">API key</p><div class="card"><div class="srow"><div><div class="slbl">Claude API key</div><div class="ssub">Get from console.anthropic.com — stored only on this device</div></div><input type="password" placeholder="sk-ant-..." value="' + esc(S.key) + '" oninput="S.key=this.value;saveKey();updateDot()"></div></div></div><div class="ssec"><p class="lbl">Briefing configuration</p><div class="card"><div class="srow"><div><div class="slbl">Locality</div><div class="ssub">Used in all prompts to localise results</div></div><input type="text" value="' + esc(S.loc) + '" oninput="S.loc=this.value;save()"></div><div class="srow" style="flex-direction:column;align-items:flex-start"><div><div class="slbl">Focus areas</div><div class="ssub">Topics included in every briefing — add your specific portfolio areas here</div></div><div class="tags">' + focusTags + '</div></div></div></div><div class="ssec"><p class="lbl">Sources to monitor</p><div class="card"><div class="srow" style="flex-direction:column;align-items:flex-start"><div style="margin-bottom:6px"><div class="slbl">Publications and organisations</div><div class="ssub">Explicitly named in your briefing prompts — add any source being missed here</div></div><div class="tags">' + srcTags + '</div></div></div></div><div class="ssec"><p class="lbl">Reset</p><div class="card"><div class="srow"><div><div class="slbl">Restore default focus areas</div></div><button class="ubtn" onclick="rstFocus()">Reset</button></div><div class="srow"><div><div class="slbl">Restore default sources</div></div><button class="ubtn" onclick="rstSources()">Reset</button></div><div class="srow"><div><div class="slbl">Clear saved library</div></div><button class="ubtn" onclick="clrSaved()">Clear</button></div></div></div><div class="ssec"><p class="lbl">About</p><div class="card"><div class="srow"><div><div class="slbl">Commissioning Intelligence Hub</div><div class="ssub">Built for a Senior Commissioner, Adult Social Care. Powered by Claude API with live web search. All data stored on this device only. To edit prompts, open the HTML file in any text editor and find buildPrompt.</div></div></div></div></div>';
 }
 
-// ─── Render ───────────────────────────────────────────────────────────────────
+function rmFocus(i){S.focus.splice(i,1);save();render();}
+function addFocus(){var t=prompt('Add focus area:');if(t&&t.trim()){S.focus.push(t.trim());save();render();}}
+function rstFocus(){if(confirm('Reset focus areas to defaults?')){S.focus=DEF_FOCUS.slice();save();render();}}
+function rmSource(i){S.sources.splice(i,1);save();render();}
+function addSource(){var t=prompt('Add source to monitor:');if(t&&t.trim()){S.sources.push(t.trim());save();render();}}
+function rstSources(){if(confirm('Reset sources to defaults?')){S.sources=DEF_SOURCES.slice();save();render();}}
+function clrSaved(){if(confirm('Delete all saved items? This cannot be undone.')){S.saved=[];save();render();}}
 
 function render() {
-  const mc = document.getElementById('main-content');
+  var mc = document.getElementById('mc');
   if (!mc) return;
-  const renderers = {
-    briefing: renderBriefing,
-    policy: renderPolicy,
-    horizon: renderHorizon,
-    funding: renderFunding,
-    local: renderLocal,
-    events: renderEvents,
-    saved: renderSaved,
-    settings: renderSettings
-  };
-  mc.innerHTML = (renderers[S.tab] || renderBriefing)();
-  updateStatusBar();
-  const dl = document.getElementById('date-line');
-  if (dl) dl.textContent = new Date().toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  var map = {briefing:rBriefing,policy:rPolicy,horizon:rHorizon,funding:rFunding,local:rLocal,events:rEvents,saved:rSaved,settings:rSettings};
+  mc.innerHTML = (map[S.tab] || rBriefing)();
+  updateDot();
+  var dl = document.getElementById('dateline');
+  if (dl) dl.textContent = new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 }
 
 render();
